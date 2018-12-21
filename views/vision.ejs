@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/materialize.min.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <script src="/public/js/jquery.min.js"></script>
+  <script src="/public/js/materialize.min.js"></script>
+  <script src="/public/js/angular.min.js"></script>
+  <script src="/public/js/angular-resource.min.js"></script>
+  <script src="/public/js/app.js"></script>
+  <script src="/public/js/company.service.js"></script>
+  <script src="/public/js/vision.service.js"></script>
+  <script src="/public/js/vision.controller.js"></script>
+  <script src="/public/js/sidenav.controller.js"></script>
+  
+</head>
+
+<body ng-app="app">
+  <div class="white" style="padding: 20px; text-align: right">
+      <a href="#" data-activates="slide-out" class="button-collapse" style="display: block;"><i class="material-icons">menu</i></a>
+  </div>
+  <li ng-controller="sidenavController">
+      <ul id="slide-out" class="side-nav">
+        <li>
+          <a href="mision?id={{id}}">Mision</a>
+        </li>
+        <li>
+          <a href="vision?id={{id}}">Vision</a>
+        </li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <a class="collapsible-header">Balance Scorecard
+                <i class="material-icons">arrow_drop_down</i>
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="finanzas?id={{id}}">Finanzas</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="cliente?id={{id}}">Cliente</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="aprendizaje?id={{id}}">Aprendizaje</a>
+                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="procesos?id={{id}}">Procesos Internos</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="/">Salir</a>
+        </li>
+      </ul>
+  </li> 
+
+  <main class="grey lighten-3" style="padding: 80px 0" ng-controller="visionController">
+    <div class="container">
+      <div class="row">
+        <h2 style="margin: 0px;">Vision</h2>
+      </div>
+      
+      <div class="row">
+        <div class="white col s9" style="padding: 20px; height: 250px">
+          <p class="flow-text" style="font-size: 18px; text-align: center; word-wrap: break-word" ng-bind="vision.value"></p>          
+        </div>
+        <div class="white col s3" style="padding: 20px; height: 250px">
+            <div class="row">
+              <p style="font-size: 36px; text-align:center" ng-class="(getTotalPunctuation() > '2.5' ? 'green-text':'red-text')">{{getTotalPunctuation() | number: 2}}</p>
+              <p ng-show="getTotalPunctuation() > 2.5" style="text-align:center; font-size: 18px" class="green-text">Mision Aprobada</p>
+              <p ng-show="getTotalPunctuation() < 2.5" style="text-align:center; font-size: 18px" class="red-text">Mision Debil</p>
+            </div>
+          </div>
+      </div>
+      <div class="row">
+        
+        <div class="white col s12" style="padding: 10px">
+          <table>
+            <thead>
+              <tr>
+                <th class="col s7">Descripción</th>
+                <th class="col s1">Valor</th>
+                <th class="col s2">Clasificación</th>
+                <th class="col s1">Ponderado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in score.values" ng-include="getTemplate(item)">
+              </tr>
+            </tbody>
+          </table>
+          <script type="text/ng-template" id="display">
+            <td class="col s7" >{{item.descripcion}}</td>
+            <td class="col s1" >{{item.peso}}</td>
+            <td class="col s2">{{item.clasificacion}}</td>
+            <td class="col s1">{{item.peso*item.clasificacion}}</td>
+            <td class="col s1"><button ng-click="editValue(item)" class="btn"> <i class="material-icons">create</i> </button></td>
+          </script>
+          <script type="text/ng-template" id="edit">
+              <!--<td ng-bind="model.selected.name"></td>-->
+              <td class="col s7" ng-bind="item.descripcion"></td>
+              <td class="col s1"><input type="text" ng-model="score.selected.peso"  required/></td>
+              <td class="col s2"><input type="text" ng-model="score.selected.clasificacion" required/></td>
+              <td class="col s1">{{score.selected.peso*score.selected.clasificacion | number: 2}}</td>
+                  <td class="col s1">
+                      <button ng-click="saveValue($index)" class="btn btn-flat green"><i class="material-icons white-text">check</i></button>
+                      <button ng-click="reset()" class="btn btn-flat red" > <i class="material-icons white-text">clear</i> </button>
+                  </td>
+          </script>
+        </div>
+        
+      </div>
+    </div>
+  </main>
+  
+  <script src="/public/js/dashboard.js"></script>
+  
+  
+</body>
+
+</html>

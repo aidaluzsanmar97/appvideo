@@ -1,0 +1,28 @@
+{
+  "name": "balanceapp",
+  "description": "The balanced scorecard (BSC) is a strategic planning and management system",
+  "main": "index.js",
+  "authors": [
+    "Leonardo Alipazaga"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "balance",
+    "score",
+    "card"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.100.2",
+    "angular": "1.6.6",
+    "chart.js": "chartjs#^2.7.1",
+    "angular-route": "1.6.6"
+  }
+}

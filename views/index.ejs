@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Balance Scorecard</title>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="public/css/materialize.min.css">
+  <link rel="stylesheet" href="public/css/styles.css">
+  <script src="/public/js/jquery.min.js"></script>
+  <script src="/public/js/materialize.min.js"></script>
+  <script src="/public/js/dashboard.js"></script>
+  <script src="/public/js/angular.min.js"></script>
+  <script src="/public/js/angular-resource.min.js"></script>
+  <script src="/public/js/app.js"></script>
+  <script src="/public/js/company.service.js"></script>
+  <script src="/public/js/company.controller.js"></script>
+  
+</head>
+<body ng-app="app">
+  <nav class="indigo darken-2 white-text">
+    <div class="nav-wrapper">
+      <a href="#!" class="logo">
+        Balance Scorecard
+      </a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">Javascript</a></li>
+        <li><a href="mobile.html">Mobile</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">Javascript</a></li>
+        <li><a href="mobile.html">Mobile</a></li>
+      </ul>
+    </div>
+  </nav>
+  <main ng-controller="companyController">
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal" style="width: 40%;">
+      <div class="modal-content">
+        <div class="row">
+          <form class="col s12 m12 l12 xl8 offset-xl2">
+            <div class="row">
+              <div class="input-field col s12 m12 xl12">
+                <input id="ruc" type="text" class="validate" required ng-model="company.ruc">
+                <label for="ruc">RUC</label>
+              </div>
+            </div>
+            <div class="row">              
+              <div class="input-field col s12 m12">
+                <input id="description" type="text" class="validate" required ng-model="company.descripcion">
+                <label for="description">Empresa</label>
+              </div>
+            </div>
+            <div class="row">              
+              <div class="input-field col s12 m12">
+                <input id="manager" type="text" class="validate" required ng-model="company.representante">
+                <label for="manager">Representante</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12 m12">
+                <textarea id="mision" class="materialize-textarea" ng-model="company.mision"></textarea>
+                <label for="mision">Misión</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="vision" class="materialize-textarea" ng-model="company.vision"></textarea>
+                <label for="vision">Visión</label>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="newCompany(company)">Crear</button>
+      </div>
+    </div>
+    <!-- Card's-->
+    <div class="row" ng-repeat="val in companies">
+      <div class="col offset-xl4 offset-m3 offset-s1 xl4 m6 s10">
+        <div class="card">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="public/img/office.jpg">
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4" ng-bind="val.descripcion">              
+              <i class="material-icons right">more_vert</i>
+            </span>
+            <p>
+              <a href="/mision?id={{val.ruc}}">Ver mas</a>
+            </p>
+          </div>
+          <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4" ng-bind="val.descripcion">
+              <i class="material-icons right">close</i>
+            </span>
+            <p>Here is some more information about this product that is only revealed once clicked on.</p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </main>
+  
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red modal-trigger" href="#modal">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+
+</body>
+</html>

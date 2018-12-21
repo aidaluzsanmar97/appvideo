@@ -1,0 +1,33 @@
+{
+  "name": "balanceapp",
+  "version": "1.0.0",
+  "description": "The balanced scorecard (BSC) is a strategic planning and management system ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alipazaga/BalanceScoreCard.git"
+  },
+  "keywords": [
+    "balance",
+    "score",
+    "card"
+  ],
+  "author": "Leonardo Alipazaga",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alipazaga/BalanceScoreCard/issues"
+  },
+  "homepage": "https://github.com/alipazaga/BalanceScoreCard#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/materialize.min.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <script src="/public/js/jquery.min.js"></script>
+  <script src="/public/js/materialize.min.js"></script>
+  <script src="/public/js/tabs.js"></script>
+  <script src="/public/js/angular.min.js"></script>
+  <script src="/public/js/angular-resource.min.js"></script>
+  <script src="/public/js/app.js"></script>
+  <script src="/public/js/objetives.service.js"></script>
+  <script src="/public/js/financial.controller.js"></script>
+  <script src="/public/js/company.service.js"></script>
+  <!--<script src="/public/js/company.controller.js"></script>-->
+  <script src="/public/js/sidenav.controller.js"></script>
+  
+  
+</head>
+
+<body ng-app="app">
+  <div class="white" style="padding: 20px; text-align: right">
+      <a href="#" data-activates="slide-out" class="button-collapse" style="display: block;"><i class="material-icons">menu</i></a>
+  </div>
+  <li ng-controller="sidenavController">
+      <ul id="slide-out" class="side-nav">
+        <li>
+          <a href="home?id={{id}}">Home</a>
+        </li>
+        <li>
+          <a href="mision?id={{id}}">Mision</a>
+        </li>
+        <li>
+          <a href="vision?id={{id}}">Vision</a>
+        </li>
+        <li>
+          <a href="valores?id={{id}}">Valores</a>
+        </li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <a class="collapsible-header" href="balance?id={{id}}">Balance Scorecard
+                <i class="material-icons">arrow_drop_down</i>
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="finanzas?id={{id}}">Finanzas</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="cliente?id={{id}}">Cliente</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="aprendizaje?id={{id}}">Aprendizaje</a>
+                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="procesos?id={{id}}">Procesos Internos</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+  </li> 
+
+  <main class="grey lighten-3" style="padding: 80px 0" ng-controller="financialController">
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s3">
+            <a href="#test1">Objetivos</a>
+          </li>
+          <li class="tab col s3">
+            <a class="active" href="#test2">Indicadores</a>
+          </li>
+        </ul>
+      </div>
+      <div id="test1" class="col s12">
+          <table>
+            <thead>
+              <tr>
+                <th>Perspectiva</th>
+                <th>Indicador</th>
+                <th>Actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in score.values" ng-include="getTemplate(item)">
+              </tr>
+            </tbody>
+          </table>
+          <script type="text/ng-template" id="display">
+            <td>{{item.descripcion}}</td>
+            <td>{{item.peso}}</td>
+            <td>{{item.clasificacion}}</td>
+            <td>{{item.peso*item.clasificacion}}</td>
+            <td><button ng-click="editValue(item)" class="btn"> <i class="material-icons">create</i> </button></td>
+          </script>
+          <script type="text/ng-template" id="edit">
+            <!--<td ng-bind="model.selected.name"></td>-->
+            <td ng-bind="item.descripcion"></td>
+            <td><input type="text" ng-model="score.selected.peso"  required/></td>
+            <td><input type="text" ng-model="score.selected.clasificacion" required/></td>
+            <td  ng-bind="score.selected.peso*score.selected.clasificacion"></td>
+            <td>
+              <button ng-click="saveValue($index)" class="btn btn-flat green"><i class="material-icons white-text">check</i></button>
+              <button ng-click="reset()" class="btn btn-flat red" > <i class="material-icons white-text">clear</i> </button>
+          </td>
+        </script>
+      </div>
+      <div id="test2" class="col s12">
+        <table>
+          <thead>
+            <tr>
+              <th>Perspectiva</th>
+              <th>Indicador</th>
+              <th>Actual</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in score.values" ng-include="getTemplate(item)">
+            </tr>
+          </tbody>
+        </table>
+        <script type="text/ng-template" id="display">
+          <td>{{item.descripcion}}</td>
+          <td>{{item.peso}}</td>
+          <td>{{item.clasificacion}}</td>
+          <td>{{item.peso*item.clasificacion}}</td>
+          <td><button ng-click="editValue(item)" class="btn"> <i class="material-icons">create</i> </button></td>
+        </script>
+        <script type="text/ng-template" id="edit">
+          <!--<td ng-bind="model.selected.name"></td>-->
+          <td ng-bind="item.descripcion"></td>
+          <td><input type="text" ng-model="score.selected.peso"  required/></td>
+          <td><input type="text" ng-model="score.selected.clasificacion" required/></td>
+          <td  ng-bind="score.selected.peso*score.selected.clasificacion"></td>
+          <td>
+            <button ng-click="saveValue($index)" class="btn btn-flat green"><i class="material-icons white-text">check</i></button>
+            <button ng-click="reset()" class="btn btn-flat red" > <i class="material-icons white-text">clear</i> </button>
+          </td>
+        </script>
+      </div>
+    </div>
+    <div class="container">
+      
+      <div class="row">
+        <div class="col s12 white" style="padding: 10px">
+          <table>
+            <thead>
+              <tr>
+                <th>Perspectiva</th>
+                <th>Indicador</th>
+                <th>Actual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in score.values" ng-include="getTemplate(item)">
+              </tr>
+            </tbody>
+          </table>
+          <script type="text/ng-template" id="display">
+            <td>{{item.descripcion}}</td>
+            <td>{{item.peso}}</td>
+            <td>{{item.clasificacion}}</td>
+            <td>{{item.peso*item.clasificacion}}</td>
+            <td><button ng-click="editValue(item)" class="btn"> <i class="material-icons">create</i> </button></td>
+          </script>
+          <script type="text/ng-template" id="edit">
+              <!--<td ng-bind="model.selected.name"></td>-->
+              <td ng-bind="item.descripcion"></td>
+              <td><input type="text" ng-model="score.selected.peso"  required/></td>
+              <td><input type="text" ng-model="score.selected.clasificacion" required/></td>
+              <td  ng-bind="score.selected.peso*score.selected.clasificacion"></td>
+                  <td>
+                      <button ng-click="saveValue($index)" class="btn btn-flat green"><i class="material-icons white-text">check</i></button>
+                      <button ng-click="reset()" class="btn btn-flat red" > <i class="material-icons white-text">clear</i> </button>
+                  </td>
+          </script>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Structure -->
+  <div id="modal" class="modal" style="width: 40%;">
+    <div class="modal-content">
+      <div class="row">
+        <form class="col s12 m12 l12 xl8 offset-xl2">
+          <div class="row">
+            <div class="input-field col s12 m12 xl12">
+              <textarea id="perspectiva" class="materialize-textarea" ng-model="objetive.description"></textarea>
+              <label for="descripcion">Descripcion</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <textarea id="perspectiva" class="materialize-textarea" ng-model="objetive.indicator"></textarea>
+              <label for="perspectiva">Perspectiva</label>
+            </div>
+          </div>          
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="iniciativa" class="materialize-textarea" ng-model="objetive.initiatives"></textarea>
+              <label for="iniciativa">Iniciativa</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="newObjetive(objetive)">Crear</button>
+    </div>
+  </div>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red modal-trigger" href="#modal">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+  </main>
+  
+  
+  <script src="/public/js/dashboard.js"></script>
+  
+  
+</body>
+
+</html>

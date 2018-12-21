@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/materialize.min.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <script src="/public/js/jquery.min.js"></script>
+  <script src="/public/js/materialize.min.js"></script>
+  <script src="/public/js/angular.min.js"></script>
+  <script src="/public/js/angular-resource.min.js"></script>
+  <script src="/public/js/app.js"></script>
+  <script src="/public/js/sidenav.controller.js"></script>
+  
+</head>
+
+<body ng-app="app">
+  <div class="white" style="padding: 20px; text-align: right">
+      <a href="#" data-activates="slide-out" class="button-collapse" style="display: block;"><i class="material-icons">menu</i></a>
+  </div>
+  <li ng-controller="sidenavController">
+      <ul id="slide-out" class="side-nav">
+        <li>
+          <a href="mision">Mision</a>
+        </li>
+        <li>
+          <a href="vision">Vision</a>
+        </li>
+        <li>
+          <a href="valores">Valores</a>
+        </li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <a class="collapsible-header">Balance Scorecard
+                <i class="material-icons">arrow_drop_down</i>
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="#!" class="collapsible-header">Financiera</a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li>
+                              <a href="#!" ng-bind="financial[0]"></a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="#!" class="collapsible-header">Cliente</a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li>
+                              <a href="#!">First</a>
+                            </li>
+                            <li>
+                              <a href="#!">Second</a>
+                            </li>
+                            <li>
+                              <a href="#!">Third</a>
+                            </li>
+                            <li>
+                              <a href="#!">Fourth</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="#!" class="collapsible-header">Aprendizaje</a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li>
+                              <a href="#!">First</a>
+                            </li>
+                            <li>
+                              <a href="#!">Second</a>
+                            </li>
+                            <li>
+                              <a href="#!">Third</a>
+                            </li>
+                            <li>
+                              <a href="#!">Fourth</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="#!" class="collapsible-header">Procesos Internos</a>
+                        <div class="collapsible-body">
+                          <ul>
+                            <li>
+                              <a href="#!">First</a>
+                            </li>
+                            <li>
+                              <a href="#!">Second</a>
+                            </li>
+                            <li>
+                              <a href="#!">Third</a>
+                            </li>
+                            <li>
+                              <a href="#!">Fourth</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="/">Salir</a>
+        </li>
+      </ul>
+  </li> 
+
+  <!-- modal structure -->
+  <div id="modal" class="modal" style="width: 40%;">
+    <div class="modal-content">
+      <div class="row">
+        <form class="col s12 m12 l12 xl8 offset-xl2">
+          <div class="row">
+            <div class="input-field col s12 m12 xl12">
+              <input id="description" type="text" class="validate" required>
+              <label for="description">Descripción</label>
+            </div>
+          </div>
+          <div class="row">              
+            <div class="input-field col s12 m12">
+              <input id="why" type="text" class="validate" required>
+              <label for="why">Porque</label>
+            </div>
+          </div>
+          <div class="row">              
+            <div class="input-field col s12 m12">
+              <input id="where" type="text" class="validate" required>
+              <label for="where">Donde</label>
+            </div>
+          </div>
+          <div class="row">              
+            <div class="input-field col s12 m12">
+              <input id="when" type="text" class="validate" required>
+              <label for="when">Cuando</label>
+            </div>
+          </div>
+          <div class="row">              
+            <div class="input-field col s12 m12">
+              <input id="who" type="text" class="validate" required>
+              <label for="who">Quien</label>
+            </div>
+          </div>
+          <div class="row">              
+            <div class="input-field col s12 m12">
+              <input id="how" type="text" class="validate" required>
+              <label for="how">Como</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="newCompany(company)">Crear</button>
+    </div>
+  </div>
+
+  <main class="grey lighten-3" style="padding: 80px 0">
+    <div class="container">
+      <div class="row">
+        <div class="white col s12" style="padding: 10px">
+            <table>
+                <thead>
+                  <tr>
+                    <th>Descripción</th>
+                    <th>Porque</th>
+                    <th>Donde</th>
+                    <th>Cuando</th>
+                    <th>Quien</th>
+                    <th>Como</th>
+                    <th>Cuanto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>Lorem ipsum dolor sit
+                  </tr>
+                  <tr>Lorem ipsum dolor sit amet consectetu</tr>
+                  <tr>Lorem ipsum dolor sit</tr>
+                  <tr>Lorem ipsum, dolor sit amet consectetur adipisicing elit</tr>
+                  <th>Lorem ipsum dolor, sit amet consectetur</th>
+                  <th>Lorem ipsum, dolor sit</th>
+                </tbody>
+              </table>          
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red modal-trigger" href="#modal">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+  
+  <script src="/public/js/dashboard.js"></script>
+  
+  
+</body>
+
+</html>

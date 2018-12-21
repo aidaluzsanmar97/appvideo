@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/materialize.min.css">
+  <link rel="stylesheet" href="/public/css/styles.css">
+  <script src="/public/js/jquery.min.js"></script>
+  <script src="/public/js/materialize.min.js"></script>
+  <script src="/public/js/angular.min.js"></script>
+  <script src="/public/js/angular-resource.min.js"></script>
+  <script src="/public/js/app.js"></script>
+  <script src="/public/js/objetives.service.js"></script>
+  <script src="/public/js/learning.controller.js"></script>
+  <script src="/public/js/company.service.js"></script>
+  <!--<script src="/public/js/company.controller.js"></script>-->
+  <script src="/public/js/sidenav.controller.js"></script>
+  
+</head>
+
+<body ng-app="app">
+  <div class="white" style="padding: 20px; text-align: right">
+      <a href="#" data-activates="slide-out" class="button-collapse" style="display: block;"><i class="material-icons">menu</i></a>
+  </div>
+  <li ng-controller="sidenavController">
+      <ul id="slide-out" class="side-nav">
+        <li>
+          <a href="mision?id={{id}}">Mision</a>
+        </li>
+        <li>
+          <a href="vision?id={{id}}">Vision</a>
+        </li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <a class="collapsible-header">Balance Scorecard
+                <i class="material-icons">arrow_drop_down</i>
+              </a>
+              <div class="collapsible-body">
+                <ul>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="finanzas?id={{id}}">Finanzas</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="cliente?id={{id}}">Cliente</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="aprendizaje?id={{id}}">Aprendizaje</a>
+                        
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                      <li>
+                        <a href="procesos?id={{id}}">Procesos Internos</a>                        
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="/">Salir</a>
+        </li>
+      </ul>
+  </li> 
+
+  <main class="grey lighten-3" style="padding: 80px 0" ng-controller="learningController">
+    <div class="container">
+      <div class="row">        
+        <div class="white col s12" style="padding: 10px">
+          <p style="font-size: 18px; text-align: center;" class="red-text" ng-show="objetives.values.length == 0">No existen objetivos</p>
+          <table ng-hide="objetives.values.length == 0">
+            <thead>
+              <tr>
+                  <th class="col s4">Objetivo</th>
+                  <th class="col s3">Indicador</th>
+                  <th class="col s1">Actual</th>
+                  <th class="col s1">Meta</th>
+                  <th class="col s2">Iniciativa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in objetives.values" ng-include="getTemplate(item)">
+              </tr>
+            </tbody>
+          </table>
+          <script type="text/ng-template" id="display">
+            <td class="col s4" style="word-wrap: break-word; padding: 10px 0;">{{item.descripcion}}</td>
+            <td class="col s3" style="word-wrap: break-word; padding: 10px 0;">{{item.indicador}}</td>
+            <td class="col s1" ng-class="(item.valor > (0.75*item.meta) ? 'amber white-text':'red white-text')" style="word-wrap: break-word; padding: 10px 0;">{{item.valor}}</td>
+            <td class="col s1" style="word-wrap: break-word; padding: 10px 0;" >{{item.meta}}</td>
+            <td class="col s2" style="word-wrap: break-word; padding: 10px 0;" >{{item.iniciativa}}</td>
+            <td class="col s1"><button ng-click="editValue(item)" class="btn"> <i class="material-icons">create</i> </button></td>
+          </script>
+          <script type="text/ng-template" id="edit">
+              <!--<td ng-bind="model.selected.name"></td>-->
+              <td class="col s4"><textarea class="materialize-textarea" style="width: 100%; padding: 0px; word-wrap: break-word;" ng-model="objetives.selected.descripcion"  required></textarea></td>
+              <td class="col s3"><textarea class="materialize-textarea" style="width: 100%; padding: 0px" ng-model="objetives.selected.indicador"  required></textarea></td>
+              <td class="col s1"><input type="text" ng-model="objetives.selected.valor" required/></td>
+              <td class="col s1"><input type="text" ng-model="objetives.selected.meta" required/></td>
+              <td class="col s2"><textarea class="materialize-textarea" style="width: 100%; padding: 0px; word-wrap: break-word;" ng-model="objetives.selected.iniciativa"  required></textarea></td>
+                  <td class="col s1">
+                      <button ng-click="saveValue($index)" class="btn btn-flat green"><i class="material-icons white-text">check</i></button>
+                      <button ng-click="reset()" class="btn btn-flat red" > <i class="material-icons white-text">clear</i> </button>
+                  </td>
+          </script>
+        </div>
+        
+      </div>
+    </div>
+    <!-- Modal Structure -->
+  <div id="modal" class="modal" style="width: 40%;">
+    <div class="modal-content">
+      <div class="row">
+        <form class="col s12 m12 l12 xl8 offset-xl2">
+          <div class="row">
+            <div class="input-field col s12 m12 xl12">
+              <input id="descripcion" type="text" class="validate" required ng-model="objetive.description">
+              <label for="descripcion">Descripcion</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12 m12">
+              <textarea id="indicador" class="materialize-textarea" ng-model="objetive.indicator"></textarea>
+              <label for="indicador">Indicador</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="valor" type="text" class="validate" required ng-model="objetive.value">
+              <label for="valor">Valor</label>
+            </div>
+          </div>
+          <div class="row">              
+            <div class="input-field col s12 m12">
+              <input id="meta" type="text" class="validate" required ng-model="objetive.goal">
+              <label for="meta">Meta</label>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea id="iniciativa" class="materialize-textarea" ng-model="objetive.initiatives"></textarea>
+              <label for="iniciativa">Iniciativa</label>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class=" modal-action modal-close waves-effect waves-green btn-flat" ng-click="newObjetive(objetive)">Crear</button>
+    </div>
+  </div>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red modal-trigger" href="#modal">
+      <i class="large material-icons">add</i>
+    </a>
+  </div>
+  </main>
+  
+  
+  <script src="/public/js/dashboard.js"></script>
+  
+  
+</body>
+
+</html>
